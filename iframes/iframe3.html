@@ -1,0 +1,713 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Metadados básicos da página -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TechFit | Academias</title>
+
+  <!-- Fonte principal para visual moderno e profissional -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* Reset global para padronizar espaçamentos */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Variáveis de tema inspiradas no mercado fitness premium */
+    :root {
+      --black: #0a0a0a;
+      --black-2: #141414;
+      --gray-1: #1e1e1e;
+      --gray-2: #2a2a2a;
+      --text: #f2f2f2;
+      --muted: #b8b8b8;
+      --yellow: #ffdc00;
+      --yellow-2: #f5c400;
+      --line: #303030;
+      --ok: #30c96b;
+      --radius: 14px;
+      --shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    /* Configuração base do corpo da página */
+    body {
+      font-family: "Montserrat", Arial, sans-serif;
+      background: var(--black);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    /* Contêiner para centralizar conteúdo */
+    .container {
+      width: min(1120px, 92%);
+      margin: 0 auto;
+    }
+
+    /* Barra superior com mensagem rápida */
+    .topbar {
+      background: #000;
+      color: #dfdfdf;
+      text-align: center;
+      font-size: 12px;
+      padding: 8px 10px;
+      border-bottom: 1px solid #222;
+    }
+
+    /* Cabeçalho principal fixo no topo */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 15;
+      background: rgba(10, 10, 10, 0.93);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid #242424;
+    }
+
+    /* Layout interno da navegação */
+    .nav {
+      min-height: 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 8px 0;
+    }
+
+    /* Marca da empresa */
+    .brand {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 0.3px;
+    }
+
+    /* Destaque de parte da marca */
+    .brand span {
+      color: var(--yellow);
+    }
+
+    /* Menu de navegação */
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    /* Links do menu */
+    nav a {
+      text-decoration: none;
+      color: #f1f1f1;
+      font-size: 13px;
+      font-weight: 600;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 2px;
+      transition: 0.25s;
+    }
+
+    /* Efeito de hover dos links */
+    nav a:hover {
+      border-color: var(--yellow);
+      color: #fff;
+    }
+
+    /* Botão principal de matrícula no header */
+    .btn-head {
+      background: var(--yellow);
+      color: #111;
+      font-weight: 800;
+      border: none;
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    /* Bloco hero com imagem de academia */
+    .hero {
+      min-height: 58vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 60px 0;
+      background: linear-gradient(rgba(0, 0, 0, 0.64), rgba(0, 0, 0, 0.64)),
+        url("https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80") center/cover;
+      border-bottom: 1px solid #2a2a2a;
+    }
+
+    /* Título principal da hero */
+    .hero h1 {
+      font-size: clamp(32px, 5.1vw, 60px);
+      line-height: 1.05;
+      margin-bottom: 10px;
+      max-width: 16ch;
+      margin-inline: auto;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+
+    /* Texto auxiliar da hero */
+    .hero p {
+      color: #dddddd;
+      max-width: 65ch;
+      margin-inline: auto;
+      margin-bottom: 18px;
+      font-size: 14px;
+    }
+
+    /* Área de busca de unidades */
+    .finder {
+      margin-inline: auto;
+      width: min(760px, 96%);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      background: #101010;
+      border: 1px solid #2d2d2d;
+      border-radius: 999px;
+      padding: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    /* Campo de entrada da busca */
+    .finder input {
+      background: transparent;
+      border: none;
+      color: #f5f5f5;
+      padding: 0 14px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    /* Botão de busca */
+    .finder button {
+      border: none;
+      background: var(--yellow);
+      color: #111;
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-weight: 800;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    /* Bloco padrão para cada seção */
+    .section {
+      padding: 42px 0;
+    }
+
+    /* Cabeçalho reutilizável das seções */
+    .section-head {
+      margin-bottom: 16px;
+    }
+
+    /* Título de seção */
+    .section-head h2 {
+      font-size: clamp(24px, 3.8vw, 38px);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      font-weight: 900;
+    }
+
+    /* Texto descritivo da seção */
+    .section-head p {
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 70ch;
+    }
+
+    /* Grid de unidades/acadêmias */
+    .units-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    /* Card de unidade */
+    .unit {
+      background: var(--black-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    /* Imagem da unidade */
+    .unit img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    /* Conteúdo textual do card */
+    .unit-body {
+      padding: 12px;
+    }
+
+    /* Nome da unidade */
+    .unit h3 {
+      font-size: 16px;
+      margin-bottom: 4px;
+      font-weight: 800;
+    }
+
+    /* Endereço da unidade */
+    .unit p {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    /* Linha com chips informativos */
+    .chips {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    /* Chip padrão */
+    .chip {
+      background: #1f1f1f;
+      border: 1px solid #333;
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-size: 11px;
+      color: #e4e4e4;
+      font-weight: 600;
+    }
+
+    /* Seção de planos com fundo diferente */
+    .plans-wrap {
+      background: #080808;
+      border-top: 1px solid #242424;
+      border-bottom: 1px solid #242424;
+    }
+
+    /* Grid de planos */
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    /* Card de plano */
+    .plan {
+      background: #141414;
+      border: 1px solid #2d2d2d;
+      border-radius: var(--radius);
+      padding: 16px;
+      display: grid;
+      gap: 8px;
+    }
+
+    /* Destaque do plano principal */
+    .plan.featured {
+      border: 2px solid var(--yellow);
+      transform: translateY(-3px);
+    }
+
+    /* Nome do plano */
+    .plan h3 {
+      font-size: 21px;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+
+    /* Valor do plano */
+    .price {
+      font-size: 33px;
+      font-weight: 900;
+      color: var(--yellow);
+      line-height: 1;
+    }
+
+    /* Moeda e fração do preço */
+    .price small {
+      font-size: 14px;
+      color: #f3f3f3;
+      font-weight: 700;
+    }
+
+    /* Lista de benefícios de cada plano */
+    .plan ul {
+      list-style: none;
+      display: grid;
+      gap: 5px;
+      font-size: 13px;
+      color: #dddddd;
+    }
+
+    /* Ícone de check antes dos itens */
+    .plan li::before {
+      content: "✓ ";
+      color: var(--ok);
+      font-weight: 800;
+    }
+
+    /* Botão de assinatura */
+    .btn-plan {
+      text-decoration: none;
+      text-align: center;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      background: var(--yellow);
+      color: #111;
+      margin-top: 5px;
+    }
+
+    /* Grid de diferenciais da academia */
+    .benefits {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    /* Card de diferencial */
+    .benefit {
+      background: #141414;
+      border: 1px solid #2b2b2b;
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    /* Título do diferencial */
+    .benefit h4 {
+      color: var(--yellow);
+      font-size: 15px;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    /* Texto do diferencial */
+    .benefit p {
+      color: #d0d0d0;
+      font-size: 13px;
+    }
+
+    /* Faixa final de CTA */
+    .cta {
+      margin-top: 18px;
+      background: linear-gradient(120deg, #111 0%, #1d1d1d 50%, #2a2a2a 100%);
+      border: 1px solid #333;
+      border-radius: 14px;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    /* Título do CTA */
+    .cta h3 {
+      text-transform: uppercase;
+      font-size: clamp(20px, 3.5vw, 30px);
+      margin-bottom: 4px;
+      font-weight: 900;
+    }
+
+    /* Texto do CTA */
+    .cta p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* Botão do CTA */
+    .cta a {
+      text-decoration: none;
+      background: var(--yellow);
+      color: #111;
+      padding: 11px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 900;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    /* Rodapé institucional */
+    footer {
+      border-top: 1px solid #242424;
+      background: #050505;
+      padding: 20px 0 24px;
+      margin-top: 22px;
+      text-align: center;
+      color: #b9b9b9;
+      font-size: 12px;
+    }
+
+    /* Responsividade para tablet e mobile */
+    @media (max-width: 920px) {
+      .units-grid,
+      .plans,
+      .benefits,
+      .cta {
+        grid-template-columns: 1fr;
+      }
+
+      .finder {
+        border-radius: 16px;
+        grid-template-columns: 1fr;
+      }
+
+      .finder button {
+        width: 100%;
+      }
+
+      nav {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Barra de aviso superior -->
+  <div class="topbar">Treine na academia mais completa da cidade | Matrícula 100% online</div>
+
+  <!-- Cabeçalho principal -->
+  <header>
+    <div class="container nav">
+      <!-- Logo da marca -->
+      <div class="brand">TECH<span>FIT</span></div>
+
+      <!-- Menu de navegação -->
+      <nav>
+        <a href="#unidades">Academias</a>
+        <a href="#planos">Planos</a>
+        <a href="#beneficios">Vantagens</a>
+        <a href="#matricula">Matrícula</a>
+        <button class="btn-head">Matricule-se</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero principal -->
+  <section class="hero">
+    <div class="container">
+      <!-- Chamada principal -->
+      <h1>Encontre uma academia perto de você</h1>
+
+      <!-- Texto de apoio -->
+      <p>Modelo profissional inspirado em grandes redes: busca de unidades, planos claros e experiência de contratação direta.</p>
+
+      <!-- Busca simulada de academia -->
+      <div class="finder">
+        <input type="text" id="searchInput" placeholder="Digite cidade, bairro ou CEP" />
+        <button id="searchBtn">Buscar academia</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção de unidades -->
+  <section class="section" id="unidades">
+    <div class="container">
+      <!-- Cabeçalho da seção -->
+      <div class="section-head">
+        <h2>Academias em destaque</h2>
+        <p>Unidades ilustrativas da TechFit, com informações institucionais e sem dados reais de terceiros.</p>
+      </div>
+
+      <!-- Grid de cards de unidade -->
+      <div class="units-grid" id="unitsGrid">
+        <!-- Unidade 1 -->
+        <article class="unit" data-city="centro">
+          <img src="https://images.unsplash.com/photo-1584863231364-2edc166de576?auto=format&fit=crop&w=1000&q=80" alt="Unidade TechFit Centro" />
+          <div class="unit-body">
+            <h3>TechFit Centro</h3>
+            <p>Região Central - consulte disponibilidade no app</p>
+            <div class="chips">
+              <span class="chip">24h</span>
+              <span class="chip">Musculação</span>
+              <span class="chip">Smart Bike</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Unidade 2 -->
+        <article class="unit" data-city="norte">
+          <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1000&q=80" alt="Unidade TechFit Norte" />
+          <div class="unit-body">
+            <h3>TechFit Norte</h3>
+            <p>Região Norte - consulte disponibilidade no app</p>
+            <div class="chips">
+              <span class="chip">Aulas Coletivas</span>
+              <span class="chip">Black Area</span>
+              <span class="chip">Vestiário</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Unidade 3 -->
+        <article class="unit" data-city="sul">
+          <img src="https://images.unsplash.com/photo-1576678927484-cc907957088c?auto=format&fit=crop&w=1000&q=80" alt="Unidade TechFit Sul" />
+          <div class="unit-body">
+            <h3>TechFit Sul</h3>
+            <p>Região Sul - consulte disponibilidade no app</p>
+            <div class="chips">
+              <span class="chip">Treino Funcional</span>
+              <span class="chip">Personal</span>
+              <span class="chip">Wi-Fi</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Unidade 4 (em breve) -->
+        <article class="unit" data-city="breve">
+          <img src="https://images.unsplash.com/photo-1517963879433-6ad2b056d712?auto=format&fit=crop&w=1000&q=80" alt="Unidade TechFit em breve" />
+          <div class="unit-body">
+            <h3>TechFit Leste (Em Breve)</h3>
+            <p>Pré-cadastro aberto para nova unidade</p>
+            <div class="chips">
+              <span class="chip">Em Breve</span>
+              <span class="chip">Pré-venda</span>
+              <span class="chip">Condições especiais</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção de planos -->
+  <section class="section plans-wrap" id="planos">
+    <div class="container">
+      <!-- Cabeçalho da seção -->
+      <div class="section-head">
+        <h2>Planos para seu objetivo</h2>
+        <p>Compare os planos e escolha o ideal para treinar com liberdade e benefícios exclusivos.</p>
+      </div>
+
+      <!-- Grid de cartões de planos -->
+      <div class="plans">
+        <!-- Plano Smart -->
+        <article class="plan">
+          <h3>Smart</h3>
+          <p class="price">R$ 89<small>,90/mês</small></p>
+          <ul>
+            <li>Acesso a 1 unidade</li>
+            <li>Área de musculação completa</li>
+            <li>Treinos no app</li>
+          </ul>
+          <a href="#" class="btn-plan">Escolher Smart</a>
+        </article>
+
+        <!-- Plano Fit (destaque) -->
+        <article class="plan featured">
+          <h3>Fit</h3>
+          <p class="price">R$ 109<small>,90/mês</small></p>
+          <ul>
+            <li>Acesso nacional TechFit</li>
+            <li>Aulas coletivas inclusas</li>
+            <li>Congele quando precisar</li>
+          </ul>
+          <a href="#" class="btn-plan">Escolher Fit</a>
+        </article>
+
+        <!-- Plano Black -->
+        <article class="plan">
+          <h3>Black</h3>
+          <p class="price">R$ 139<small>,90/mês</small></p>
+          <ul>
+            <li>Leve 1 convidado 5x ao mês</li>
+            <li>Massagem e cadeira relax</li>
+            <li>Acesso a área premium</li>
+          </ul>
+          <a href="#" class="btn-plan">Escolher Black</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção de benefícios -->
+  <section class="section" id="beneficios">
+    <div class="container">
+      <!-- Cabeçalho da seção -->
+      <div class="section-head">
+        <h2>Vantagens de treinar na TechFit</h2>
+        <p>Infraestrutura profissional com foco em performance e experiência do aluno.</p>
+      </div>
+
+      <!-- Cards de diferenciais -->
+      <div class="benefits">
+        <article class="benefit">
+          <h4>Equipamentos Premium</h4>
+          <p>Aparelhos modernos para todos os grupos musculares.</p>
+        </article>
+        <article class="benefit">
+          <h4>Suporte Profissional</h4>
+          <p>Equipe pronta para te orientar em cada fase do treino.</p>
+        </article>
+        <article class="benefit">
+          <h4>App de Treino</h4>
+          <p>Rotinas personalizadas e acompanhamento de evolução.</p>
+        </article>
+        <article class="benefit">
+          <h4>Ambiente Seguro</h4>
+          <p>Controle de acesso, limpeza frequente e padrão elevado.</p>
+        </article>
+      </div>
+
+      <!-- Chamada final para matrícula -->
+      <div class="cta" id="matricula">
+        <div>
+          <h3>Comece hoje sua evolução</h3>
+          <p>Garanta sua vaga com matrícula online e tenha acesso imediato ao app e unidades disponíveis.</p>
+        </div>
+        <a href="#">Quero Me Matricular</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rodapé institucional -->
+  <footer>
+    <p>© 2026 TechFit Academias | Conteúdo demonstrativo e institucional</p>
+    <p>Central de Atendimento: 0800 000 2026</p>
+  </footer>
+
+  <script>
+    // Captura dos elementos de busca
+    const inputBusca = document.getElementById("searchInput");
+    const botaoBusca = document.getElementById("searchBtn");
+    const cardsUnidade = document.querySelectorAll("#unitsGrid .unit");
+
+    // Função para filtrar unidades por texto digitado
+    function filtrarUnidades() {
+      // Normaliza o texto para busca
+      const termo = inputBusca.value.trim().toLowerCase();
+
+      // Percorre cada card de unidade
+      cardsUnidade.forEach((card) => {
+        // Lê cidade do atributo data-city
+        const cidade = card.dataset.city;
+
+        // Lê conteúdo textual completo do card
+        const conteudo = card.textContent.toLowerCase();
+
+        // Verifica se o termo aparece na cidade ou no texto
+        const mostrar = termo === "" || cidade.includes(termo) || conteudo.includes(termo);
+
+        // Exibe ou oculta o card conforme resultado
+        card.style.display = mostrar ? "block" : "none";
+      });
+    }
+
+    // Dispara o filtro ao clicar no botão
+    botaoBusca.addEventListener("click", filtrarUnidades);
+
+    // Dispara o filtro ao pressionar Enter no input
+    inputBusca.addEventListener("keydown", (evento) => {
+      if (evento.key === "Enter") {
+        filtrarUnidades();
+      }
+    });
+  </script>
+</body>
+</html>

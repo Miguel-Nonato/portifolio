@@ -1,0 +1,562 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZapPilot AI | WhatsApp Chatbot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0c1224;
+      --bg-soft: #141d35;
+      --card: #ffffff;
+      --line: #dbe4f3;
+      --text: #1f2b45;
+      --muted: #69748f;
+      --brand: #22c55e;
+      --brand-2: #16a34a;
+      --accent: #0ea5e9;
+      --radius: 14px;
+      --shadow: 0 14px 30px rgba(9, 17, 36, 0.2);
+    }
+
+    body {
+      font-family: "Manrope", Arial, sans-serif;
+      background: linear-gradient(130deg, #0b1122 0%, #141d35 50%, #1b2550 120%);
+      color: #ecf2ff;
+      line-height: 1.5;
+    }
+
+    .container { width: min(1140px, 92%); margin: 0 auto; }
+
+    .topbar {
+      background: #080d1b;
+      color: #b5c2e1;
+      font-size: 12px;
+      text-align: center;
+      padding: 8px 10px;
+      border-bottom: 1px solid #202b4a;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(11, 17, 34, 0.92);
+      border-bottom: 1px solid #233057;
+      backdrop-filter: blur(6px);
+    }
+
+    .nav {
+      min-height: 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 8px 0;
+    }
+
+    .brand {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+    }
+
+    .brand span { color: #4ade80; }
+
+    nav { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+
+    nav a {
+      color: #d6e3ff;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .btn-head {
+      border: none;
+      border-radius: 999px;
+      background: var(--brand);
+      color: #062310;
+      font-weight: 800;
+      font-size: 12px;
+      padding: 9px 13px;
+      cursor: pointer;
+    }
+
+    .hero {
+      padding: 54px 0 34px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .hero-copy,
+    .hero-kpis {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(165, 186, 228, 0.3);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero h1 {
+      font-size: clamp(29px, 4.8vw, 52px);
+      line-height: 1.05;
+      margin-bottom: 10px;
+      font-weight: 800;
+      max-width: 14ch;
+    }
+
+    .hero p {
+      color: #c8d6f3;
+      margin-bottom: 14px;
+      max-width: 60ch;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-main { background: #4ade80; color: #05220f; }
+    .btn-alt { background: rgba(255, 255, 255, 0.08); color: #e8f0ff; border: 1px solid rgba(255, 255, 255, 0.3); }
+
+    .hero-kpis h3 {
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .hero-kpis ul {
+      list-style: none;
+      display: grid;
+      gap: 7px;
+      font-size: 13px;
+      color: #d7e4ff;
+    }
+
+    .hero-kpis li::before { content: "• "; color: #4ade80; font-weight: 700; }
+
+    .section {
+      padding: 14px 0 30px;
+    }
+
+    .section-head {
+      margin-bottom: 10px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(23px, 3.4vw, 34px);
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .section-head p {
+      color: #c5d5f2;
+      font-size: 14px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 12px;
+    }
+
+    .panel {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      color: var(--text);
+    }
+
+    .config {
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+      align-self: start;
+      position: sticky;
+      top: 90px;
+    }
+
+    .config h3 {
+      font-size: 14px;
+      margin-bottom: 2px;
+      color: #10203f;
+    }
+
+    .field {
+      display: grid;
+      gap: 5px;
+    }
+
+    .field label {
+      font-size: 12px;
+      color: #4f5b78;
+      font-weight: 700;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      border: 1px solid #ccd8ed;
+      border-radius: 10px;
+      padding: 9px 10px;
+      font-size: 13px;
+      font-family: inherit;
+      color: #1f2b45;
+      outline: none;
+      background: #f9fbff;
+    }
+
+    .field textarea { min-height: 74px; resize: vertical; }
+
+    .note {
+      font-size: 11px;
+      color: #6c7895;
+      background: #f1f6ff;
+      border: 1px dashed #bbcae6;
+      border-radius: 9px;
+      padding: 8px;
+    }
+
+    .chat-area {
+      padding: 14px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      min-height: 420px;
+      gap: 10px;
+    }
+
+    .chat-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chat-head h3 {
+      font-size: 15px;
+      color: #0f2141;
+    }
+
+    .status {
+      font-size: 11px;
+      font-weight: 700;
+      color: #0d7a3b;
+      background: #def8e9;
+      border: 1px solid #8ad8ab;
+      border-radius: 999px;
+      padding: 4px 9px;
+    }
+
+    .chat-box {
+      border: 1px solid #d5e0f2;
+      border-radius: 12px;
+      background: #f8fbff;
+      padding: 10px;
+      overflow: auto;
+      max-height: 290px;
+      display: grid;
+      gap: 8px;
+      align-content: start;
+    }
+
+    .msg {
+      max-width: 78%;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .msg.user {
+      margin-left: auto;
+      background: #e3efff;
+      color: #10203d;
+      border: 1px solid #c0d3f0;
+    }
+
+    .msg.bot {
+      margin-right: auto;
+      background: #ecfdf3;
+      color: #0f2f1d;
+      border: 1px solid #bde8cc;
+    }
+
+    .composer {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+    }
+
+    .composer input {
+      border: 1px solid #cad8ef;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .composer button {
+      border: none;
+      border-radius: 10px;
+      background: var(--brand-2);
+      color: #fff;
+      font-weight: 800;
+      font-size: 12px;
+      padding: 10px 14px;
+      cursor: pointer;
+    }
+
+    .foot-actions {
+      margin-top: 10px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .mini {
+      font-size: 11px;
+      color: #6d7891;
+      margin-top: 4px;
+    }
+
+    footer {
+      padding: 14px 0 20px;
+      text-align: center;
+      color: #aebcdc;
+      font-size: 12px;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .config {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">WhatsApp AI grátis para todos | Demo funcional no navegador</div>
+
+  <header>
+    <div class="container nav">
+      <div class="brand">ZapPilot <span>AI</span></div>
+      <nav>
+        <a href="#recursos">Recursos</a>
+        <a href="#playground">Playground</a>
+        <a href="#integracao">Integração</a>
+        <button class="btn-head">Grátis para todos</button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="recursos">
+    <div class="container hero-grid">
+      <article class="hero-copy">
+        <h1>Chatbot de WhatsApp grátis para todos</h1>
+        <p>Treine com dados do seu negócio, personalize o tom da conversa e automatize respostas para vendas, agendamentos e suporte.</p>
+        <div class="hero-actions">
+          <a class="btn btn-main" href="#playground">Usar grátis agora</a>
+          <a class="btn btn-alt" href="#integracao">Ver integração real</a>
+        </div>
+      </article>
+
+      <article class="hero-kpis">
+        <h3>O que ele faz</h3>
+        <ul>
+          <li>Responde clientes 24/7 no WhatsApp</li>
+          <li>Aprende tom e informações da sua empresa</li>
+          <li>Personaliza mensagens por objetivo de negócio</li>
+          <li>Encaminha para humano quando necessário</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="playground">
+    <div class="container">
+      <div class="section-head">
+        <h2>Playground da IA grátis (funciona agora)</h2>
+        <p>Preencha os campos à esquerda e teste respostas personalizadas no chat à direita.</p>
+      </div>
+
+      <div class="layout">
+        <aside class="panel config">
+          <h3>Personalização do agente</h3>
+
+          <div class="field">
+            <label for="businessName">Nome do negócio</label>
+            <input id="businessName" type="text" value="Sua Empresa" />
+          </div>
+
+          <div class="field">
+            <label for="businessType">Tipo de negócio</label>
+            <input id="businessType" type="text" value="Clínica estética" />
+          </div>
+
+          <div class="field">
+            <label for="tone">Tom da conversa</label>
+            <select id="tone">
+              <option value="profissional">Profissional</option>
+              <option value="amigavel">Amigável</option>
+              <option value="direto">Direto</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="goal">Objetivo principal</label>
+            <select id="goal">
+              <option value="vendas">Vendas</option>
+              <option value="agendamentos">Agendamentos</option>
+              <option value="suporte">Suporte</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="knowledge">Base de conhecimento</label>
+            <textarea id="knowledge">Horário: 08h-19h. Pagamento: Pix/cartão. Atendimento humano via WhatsApp quando solicitado.</textarea>
+          </div>
+
+          <p class="note">A demo abaixo responde com base nestes campos. Para responder WhatsApp real, use integração com API oficial.</p>
+        </aside>
+
+        <article class="panel chat-area">
+          <div class="chat-head">
+            <h3>Simulador de Conversa</h3>
+            <span class="status">IA ativa</span>
+          </div>
+
+          <div class="chat-box" id="chatBox">
+            <div class="msg bot">Olá. Sou sua assistente de WhatsApp. Me diga como posso ajudar.</div>
+          </div>
+
+          <div>
+            <div class="composer">
+              <input id="userInput" type="text" placeholder="Digite uma pergunta de cliente..." />
+              <button id="sendBtn">Enviar</button>
+            </div>
+            <p class="mini">Exemplos: "Qual o preço?", "Quero agendar", "Tem atendimento hoje?"</p>
+            <div class="foot-actions">
+              <a class="btn btn-main" id="openWa" href="https://wa.me/5518998180026?text=Olá%2C%20quero%20configurar%20um%20chatbot%20no%20WhatsApp." target="_blank" rel="noopener noreferrer">Abrir WhatsApp</a>
+              <a class="btn btn-alt" href="#integracao">Checklist de integração real</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="integracao">
+    <div class="container panel" style="padding:14px;">
+      <div class="section-head" style="margin-bottom:6px;">
+        <h2 style="color:#10203f;">Para funcionar de verdade no WhatsApp</h2>
+        <p style="color:#5c6a86;">Passos técnicos para sair da demo e responder clientes reais automaticamente.</p>
+      </div>
+      <p style="color:#3f4e6f; font-size:13px;">1. Criar número no WhatsApp Business API (Meta Cloud API, Twilio, Z-API, 360dialog etc.). 2. Configurar webhook/backend para receber mensagens. 3. Conectar motor de IA (OpenAI) com seu prompt e base de conhecimento. 4. Enviar resposta via API oficial. 5. Registrar conversas e permitir fallback humano.</p>
+    </div>
+  </section>
+
+  <footer>
+    Projeto demonstrativo de site para chatbot de WhatsApp grátis para todos, com personalização e playground funcional.
+  </footer>
+
+  <script>
+    const chatBox = document.getElementById("chatBox");
+    const userInput = document.getElementById("userInput");
+    const sendBtn = document.getElementById("sendBtn");
+
+    const businessName = document.getElementById("businessName");
+    const businessType = document.getElementById("businessType");
+    const tone = document.getElementById("tone");
+    const goal = document.getElementById("goal");
+    const knowledge = document.getElementById("knowledge");
+
+    function addMessage(text, type) {
+      const div = document.createElement("div");
+      div.className = "msg " + type;
+      div.textContent = text;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function buildReply(message) {
+      const msg = message.toLowerCase();
+      const empresa = businessName.value.trim() || "nossa empresa";
+      const tipo = businessType.value.trim() || "negócio";
+      const tom = tone.value;
+      const objetivo = goal.value;
+      const base = knowledge.value.trim();
+
+      let abertura = "";
+      if (tom === "profissional") abertura = "Perfeito, obrigado pelo contato.";
+      if (tom === "amigavel") abertura = "Oi. Que bom falar com você.";
+      if (tom === "direto") abertura = "Entendi.";
+
+      let foco = "";
+      if (objetivo === "vendas") foco = "Posso te passar as opções e valores mais indicados agora.";
+      if (objetivo === "agendamentos") foco = "Posso confirmar horários e já deixar seu agendamento pronto.";
+      if (objetivo === "suporte") foco = "Posso te orientar agora e, se necessário, encaminhar para humano.";
+
+      if (msg.includes("preço") || msg.includes("valor")) {
+        return abertura + " Aqui na " + empresa + " (" + tipo + "), trabalhamos com atendimento personalizado. " + foco;
+      }
+
+      if (msg.includes("agendar") || msg.includes("horário") || msg.includes("hoje")) {
+        return abertura + " Temos disponibilidade conforme agenda atual. " + foco + "\n\nInformações base: " + base;
+      }
+
+      if (msg.includes("humano") || msg.includes("atendente")) {
+        return abertura + " Vou encaminhar para atendimento humano. Enquanto isso, posso adiantar alguns dados para acelerar seu atendimento.";
+      }
+
+      return abertura + " Sou a assistente virtual da " + empresa + ". " + foco + "\n\nBase usada: " + base;
+    }
+
+    function sendMessage() {
+      const text = userInput.value.trim();
+      if (!text) return;
+
+      addMessage(text, "user");
+      userInput.value = "";
+
+      const reply = buildReply(text);
+      setTimeout(() => addMessage(reply, "bot"), 350);
+    }
+
+    sendBtn.addEventListener("click", sendMessage);
+    userInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") sendMessage();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,458 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Padaria&Cafateria</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #f7f1e8;
+      --paper: #fffaf2;
+      --brown: #4a2f1f;
+      --brown-soft: #6e4a34;
+      --gold: #b98a4a;
+      --text: #2d241f;
+      --muted: #73645b;
+      --line: #e6d8c5;
+      --shadow: 0 12px 26px rgba(56, 35, 23, 0.12);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Montserrat", Arial, sans-serif;
+      color: var(--text);
+      background: var(--cream);
+      line-height: 1.5;
+    }
+
+    .container {
+      width: min(1140px, 92%);
+      margin: 0 auto;
+    }
+
+    .topbar {
+      background: #392317;
+      color: #f2ddc4;
+      font-size: 12px;
+      padding: 7px 0;
+      text-align: center;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(74, 47, 31, 0.96);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(5px);
+    }
+
+    .nav {
+      min-height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding: 8px 0;
+    }
+
+    .brand {
+      font-family: "Playfair Display", serif;
+      color: #fff;
+      font-size: 30px;
+      letter-spacing: 0.2px;
+    }
+
+    .brand span {
+      color: #ffd39c;
+    }
+
+    nav {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #f8efe5;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 2px;
+      transition: 0.2s;
+    }
+
+    nav a:hover {
+      border-color: var(--gold);
+    }
+
+    .hero {
+      min-height: 62vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: #fff;
+      padding: 64px 0;
+      background: linear-gradient(rgba(43, 25, 16, 0.58), rgba(43, 25, 16, 0.58)),
+        url("https://images.unsplash.com/photo-1555507036-ab794f5753f0?auto=format&fit=crop&w=1600&q=80") center/cover;
+    }
+
+    .hero h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(28px, 5vw, 54px);
+      margin-bottom: 8px;
+      max-width: 18ch;
+      margin-inline: auto;
+    }
+
+    .hero p {
+      max-width: 70ch;
+      margin-inline: auto;
+      color: #f8eada;
+      margin-bottom: 16px;
+      font-size: 14px;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 10px 16px;
+    }
+
+    .btn-main {
+      background: var(--gold);
+      color: #321e12;
+    }
+
+    .btn-alt {
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .section {
+      padding: 44px 0;
+    }
+
+    .title {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .title h2 {
+      font-family: "Playfair Display", serif;
+      color: var(--brown);
+      font-size: 34px;
+      margin-bottom: 5px;
+    }
+
+    .title p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .tile {
+      position: relative;
+      overflow: hidden;
+      border-radius: 14px;
+      min-height: 180px;
+      box-shadow: var(--shadow);
+      border: 1px solid #c8aa84;
+    }
+
+    .tile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.72);
+    }
+
+    .tile span {
+      position: absolute;
+      left: 12px;
+      bottom: 28px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .tile-price {
+      position: absolute;
+      left: 12px;
+      bottom: 8px;
+      color: #ffe2b8;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .shop-banner {
+      margin-top: 16px;
+      background: linear-gradient(135deg, #4b2e1f, #6e4a34);
+      color: #f6e4cc;
+      border-radius: 14px;
+      padding: 20px;
+      border: 1px solid #8b6a4b;
+      text-align: center;
+    }
+
+    .shop-banner h3 {
+      font-family: "Playfair Display", serif;
+      font-size: 30px;
+      margin-bottom: 4px;
+      color: #fff;
+    }
+
+    .shop-banner strong {
+      color: #ffd69f;
+    }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .post {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .post img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .post-body {
+      padding: 12px;
+    }
+
+    .post h4 {
+      color: var(--brown);
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .post p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .info-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .info-box {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .info-box h3 {
+      font-family: "Playfair Display", serif;
+      color: var(--brown);
+      font-size: 27px;
+      margin-bottom: 8px;
+    }
+
+    .info-box p,
+    .info-box li {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .info-box ul {
+      padding-left: 18px;
+      display: grid;
+      gap: 5px;
+    }
+
+    footer {
+      margin-top: 34px;
+      background: #392317;
+      color: #ead6bf;
+      padding: 24px 0;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    footer p + p {
+      margin-top: 4px;
+    }
+
+    @media (max-width: 940px) {
+      .catalog-grid,
+      .blog-grid,
+      .info-wrap {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">Padaria, Confeitaria, Cestas Matinais, Cafeteria, Lanchonete e Refeições</div>
+
+  <header>
+    <div class="container nav">
+      <h1 class="brand">Padaria<span>&Cafateria</span></h1>
+      <nav>
+        <a href="#inicio">Pág. Inicial</a>
+        <a href="#produtos">Produtos</a>
+        <a href="#blog">Blog</a>
+        <a href="#contato">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="inicio">
+    <div class="container">
+      <h1>Padaria, Confeitaria, Cafeteria e Refeições</h1>
+      <p>Modelo profissional de padaria com estrutura completa: loja virtual, produtos, blog, horário de funcionamento e contato.</p>
+      <div class="hero-cta">
+        <a class="btn btn-main" href="#produtos">LOJA VIRTUAL</a>
+        <a class="btn btn-alt" href="#contato">FALAR NO WHATSAPP</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="produtos">
+    <div class="container">
+      <div class="title">
+        <h2>Conheça Nossa Loja</h2>
+        <p><strong>Produtos em até 12x no cartão</strong> | + de 700 tipos de produtos | feito com muito amor pra você</p>
+      </div>
+
+      <div class="catalog-grid">
+        <article class="tile">
+          <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80" alt="Pães especiais" />
+          <span>Pães Especiais</span>
+          <small class="tile-price">A partir de R$ 12,90</small>
+        </article>
+        <article class="tile">
+          <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?auto=format&fit=crop&w=1200&q=80" alt="Confeitaria premium" />
+          <span>Confeitaria Premium</span>
+          <small class="tile-price">A partir de R$ 9,90</small>
+        </article>
+        <article class="tile">
+          <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=1200&q=80" alt="Lanches e refeições" />
+          <span>Lanches e Refeições</span>
+          <small class="tile-price">A partir de R$ 14,90</small>
+        </article>
+        <article class="tile">
+          <img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=1200&q=80" alt="Cestas matinais" />
+          <span>Cestas Matinais</span>
+          <small class="tile-price">A partir de R$ 79,90</small>
+        </article>
+        <article class="tile">
+          <img src="https://images.unsplash.com/photo-1627308595216-439c00ade35f?auto=format&fit=crop&w=1200&q=80" alt="Tábuas e coffee break" />
+          <span>Tábuas e Coffee Break</span>
+          <small class="tile-price">A partir de R$ 89,90</small>
+        </article>
+        <article class="tile">
+          <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=1200&q=80" alt="Cafeteria" />
+          <span>Cafeteria</span>
+          <small class="tile-price">A partir de R$ 6,50</small>
+        </article>
+      </div>
+
+      <div class="shop-banner">
+        <h3>LOJA VIRTUAL</h3>
+        <p><strong>CONHEÇA NOSSA</strong> seleção completa e compre com praticidade.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="blog">
+    <div class="container">
+      <div class="title">
+        <h2>Veja Nosso Blog</h2>
+      </div>
+
+      <div class="blog-grid">
+        <article class="post">
+          <img src="https://images.unsplash.com/photo-1608198093002-ad4e005484ec?auto=format&fit=crop&w=1000&q=80" alt="Panettone" />
+          <div class="post-body">
+            <h4>A verdade que não te contam sobre o Panettone</h4>
+            <p>Dicas sobre fermentação e ingredientes para um panettone perfeito.</p>
+          </div>
+        </article>
+
+        <article class="post">
+          <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=80" alt="Caldos artesanais" />
+          <div class="post-body">
+            <h4>Caldos Artesanais: Saúde e aconchego</h4>
+            <p>Receitas tradicionais para dias frios com sabor caseiro de verdade.</p>
+          </div>
+        </article>
+
+        <article class="post">
+          <img src="https://images.unsplash.com/photo-1606787366850-de6330128bfc?auto=format&fit=crop&w=1000&q=80" alt="História da padaria" />
+          <div class="post-body">
+            <h4>Entre pães, flores e fé</h4>
+            <p>A história por trás da dedicação diária da equipe da padaria.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contato">
+    <div class="container info-wrap">
+      <article class="info-box">
+        <h3>Horário de Funcionamento</h3>
+        <p><strong>Segunda a Sábado:</strong> 06:30 - 20:00</p>
+        <p><strong>Feriados:</strong> 07:00 - 13:00</p>
+      </article>
+
+      <article class="info-box">
+        <h3>Contato e Localização</h3>
+        <ul>
+          <li>Rua das Acácias, 245 - Centro - Cidade Exemplo/SP</li>
+          <li>Telefone: (11) 4000-1234</li>
+          <li>WhatsApp: (11) 98888-1234</li>
+          <li>E-mail: contato@padariaecafateria.com</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <footer>
+    <p>Padaria&Cafateria Alimentos LTDA | CNPJ 00.000.000/0001-00</p>
+    <p>Rua das Acácias, 245 - Centro / Cidade Exemplo-SP</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,537 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shopping do Celular | Produtos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #f3f6fb;
+      --card: #ffffff;
+      --line: #dfe6f2;
+      --text: #1a2336;
+      --muted: #66728a;
+      --brand: #0057d8;
+      --brand-2: #0ea5ff;
+      --ok: #16a34a;
+      --deal: #ef4444;
+      --shadow: 0 10px 24px rgba(13, 35, 74, 0.12);
+      --radius: 14px;
+    }
+
+    body {
+      font-family: "Montserrat", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.5;
+    }
+
+    .container { width: min(1140px, 92%); margin: 0 auto; }
+
+    .topbar {
+      background: #0f274f;
+      color: #d8e6ff;
+      text-align: center;
+      padding: 8px 10px;
+      font-size: 12px;
+    }
+
+    header {
+      background: linear-gradient(120deg, #0b1f40 0%, #13428f 55%, #0ea5ff 135%);
+      color: #fff;
+      padding: 18px 0;
+      box-shadow: var(--shadow);
+    }
+
+    .header-grid {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .brand {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: .2px;
+      white-space: nowrap;
+    }
+
+    .brand span { color: #bde6ff; }
+
+    .search {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 999px;
+      padding: 6px;
+    }
+
+    .search input {
+      border: none;
+      background: transparent;
+      color: #fff;
+      font-size: 14px;
+      padding: 0 12px;
+      outline: none;
+    }
+
+    .search input::placeholder { color: #d8e8ff; }
+
+    .search button {
+      border: none;
+      background: #fff;
+      color: #08306b;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .head-actions {
+      display: flex;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .head-actions span {
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      border-radius: 999px;
+      padding: 6px 10px;
+    }
+
+    .catalog {
+      padding: 26px 0 10px;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 14px;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .sidebar {
+      padding: 14px;
+      display: grid;
+      gap: 14px;
+      align-self: start;
+      position: sticky;
+      top: 14px;
+    }
+
+    .sidebar h3 {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: .2px;
+      margin-bottom: 8px;
+    }
+
+    .filter-list {
+      display: grid;
+      gap: 7px;
+    }
+
+    .filter-btn {
+      text-align: left;
+      border: 1px solid var(--line);
+      background: #f8fbff;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #34435f;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      border-color: #93c8ff;
+      color: #08367a;
+      background: #eaf4ff;
+    }
+
+    .stock-note {
+      font-size: 12px;
+      color: var(--muted);
+      background: #f7faff;
+      border: 1px dashed #bfdcff;
+      border-radius: 10px;
+      padding: 8px;
+    }
+
+    .products-wrap { padding: 14px; }
+
+    .products-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .products-head h2 {
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .products-head p {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(13, 35, 74, 0.12);
+    }
+
+    .thumb {
+      position: relative;
+      height: 128px;
+      background: linear-gradient(140deg, #eef4ff, #dceaff);
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: var(--deal);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 3px 7px;
+    }
+
+    .content { padding: 10px; }
+
+    .content h3 {
+      font-size: 14px;
+      margin-bottom: 4px;
+      min-height: 38px;
+    }
+
+    .spec {
+      color: var(--muted);
+      font-size: 11px;
+      margin-bottom: 7px;
+      min-height: 32px;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .old {
+      color: #8b95a8;
+      text-decoration: line-through;
+      font-size: 11px;
+    }
+
+    .price {
+      color: #0e2d60;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .pix {
+      color: var(--ok);
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .buy {
+      width: 100%;
+      border: none;
+      border-radius: 9px;
+      padding: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      background: var(--brand);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    footer {
+      margin-top: 16px;
+      padding: 14px 0 18px;
+      text-align: center;
+      color: #6c7890;
+      font-size: 12px;
+    }
+
+    @media (max-width: 980px) {
+      .catalog { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .grid { grid-template-columns: 1fr 1fr; }
+      .header-grid { grid-template-columns: 1fr; }
+      .head-actions { justify-content: flex-start; }
+    }
+
+    @media (max-width: 620px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">Entrega rápida | Garantia de 12 meses | Parcelamento em até 12x</div>
+
+  <header>
+    <div class="container header-grid">
+      <div class="brand">Shopping do <span>Celular</span></div>
+
+      <div class="search">
+        <input id="searchInput" type="text" placeholder="Buscar por iPhone, Samsung, Xiaomi..." />
+        <button id="searchBtn">Buscar</button>
+      </div>
+
+      <div class="head-actions">
+        <span>Minha Conta</span>
+        <span>Favoritos</span>
+        <span>Carrinho (0)</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container catalog">
+    <aside class="panel sidebar">
+      <div>
+        <h3>Marcas</h3>
+        <div class="filter-list" id="brandFilters">
+          <button class="filter-btn active" data-brand="todos">Todos</button>
+          <button class="filter-btn" data-brand="apple">Apple</button>
+          <button class="filter-btn" data-brand="samsung">Samsung</button>
+          <button class="filter-btn" data-brand="xiaomi">Xiaomi</button>
+          <button class="filter-btn" data-brand="motorola">Motorola</button>
+        </div>
+      </div>
+
+      <div>
+        <h3>Categorias</h3>
+        <div class="filter-list">
+          <button class="filter-btn">Celulares Novos</button>
+          <button class="filter-btn">Seminovos Premium</button>
+          <button class="filter-btn">Acessórios</button>
+        </div>
+      </div>
+
+      <p class="stock-note">Estoque atualizado diariamente. Preços e disponibilidade podem variar sem aviso prévio.</p>
+    </aside>
+
+    <section class="panel products-wrap">
+      <div class="products-head">
+        <h2>Produtos</h2>
+        <p id="resultsCount">Mostrando 24 produtos</p>
+      </div>
+
+      <div class="grid" id="productsGrid">
+        <article class="card" data-brand="apple" data-name="iphone 15 pro max">
+          <div class="thumb"><span class="badge">OFERTA</span><img src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=900&q=80" alt="iPhone 15 Pro Max" /></div>
+          <div class="content"><h3>iPhone 15 Pro Max</h3><p class="spec">256GB | Titânio | Novo lacrado</p><div class="price-row"><span class="old">R$ 8.999,90</span><span class="price">R$ 8.299,90</span></div><p class="pix">no Pix: R$ 7.969,00</p><button class="buy">Comprar</button></div>
+        </article>
+
+        <article class="card" data-brand="apple" data-name="iphone 14">
+          <div class="thumb"><img src="https://images.unsplash.com/photo-1664478546384-d57ffe74a2cb?auto=format&fit=crop&w=900&q=80" alt="iPhone 14" /></div>
+          <div class="content"><h3>iPhone 14</h3><p class="spec">128GB | Preto | Garantia 1 ano</p><div class="price-row"><span class="price">R$ 4.799,90</span></div><p class="pix">no Pix: R$ 4.607,90</p><button class="buy">Comprar</button></div>
+        </article>
+
+        <article class="card" data-brand="samsung" data-name="galaxy s24 ultra">
+          <div class="thumb"><span class="badge">TOP</span><img src="https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=900&q=80" alt="Galaxy S24 Ultra" /></div>
+          <div class="content"><h3>Galaxy S24 Ultra</h3><p class="spec">256GB | 12GB RAM | Tela 120Hz</p><div class="price-row"><span class="old">R$ 7.199,90</span><span class="price">R$ 6.699,90</span></div><p class="pix">no Pix: R$ 6.431,90</p><button class="buy">Comprar</button></div>
+        </article>
+
+        <article class="card" data-brand="samsung" data-name="galaxy a55">
+          <div class="thumb"><img src="https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=900&q=80" alt="Galaxy A55" /></div>
+          <div class="content"><h3>Galaxy A55</h3><p class="spec">256GB | Câmera 50MP | 5G</p><div class="price-row"><span class="price">R$ 2.199,90</span></div><p class="pix">no Pix: R$ 2.111,90</p><button class="buy">Comprar</button></div>
+        </article>
+
+        <article class="card" data-brand="xiaomi" data-name="redmi note 13 pro">
+          <div class="thumb"><img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=900&q=80" alt="Redmi Note 13 Pro" /></div>
+          <div class="content"><h3>Redmi Note 13 Pro</h3><p class="spec">256GB | 8GB RAM | 200MP</p><div class="price-row"><span class="price">R$ 1.999,90</span></div><p class="pix">no Pix: R$ 1.919,90</p><button class="buy">Comprar</button></div>
+        </article>
+
+        <article class="card" data-brand="xiaomi" data-name="poco x6 pro">
+          <div class="thumb"><span class="badge">GAMER</span><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=80" alt="POCO X6 Pro" /></div>
+          <div class="content"><h3>POCO X6 Pro</h3><p class="spec">512GB | Performance extrema</p><div class="price-row"><span class="price">R$ 2.499,90</span></div><p class="pix">no Pix: R$ 2.399,90</p><button class="buy">Comprar</button></div>
+        </article>
+
+        <article class="card" data-brand="motorola" data-name="moto g84">
+          <div class="thumb"><img src="https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?auto=format&fit=crop&w=900&q=80" alt="Moto G84" /></div>
+          <div class="content"><h3>Moto G84</h3><p class="spec">256GB | OLED | 5G</p><div class="price-row"><span class="price">R$ 1.649,90</span></div><p class="pix">no Pix: R$ 1.583,90</p><button class="buy">Comprar</button></div>
+        </article>
+
+        <article class="card" data-brand="motorola" data-name="edge 50 fusion">
+          <div class="thumb"><img src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?auto=format&fit=crop&w=900&q=80" alt="Motorola Edge 50 Fusion" /></div>
+          <div class="content"><h3>Edge 50 Fusion</h3><p class="spec">256GB | Câmera Sony Lytia</p><div class="price-row"><span class="price">R$ 2.299,90</span></div><p class="pix">no Pix: R$ 2.207,90</p><button class="buy">Comprar</button></div>
+        </article>
+
+        <article class="card" data-brand="apple" data-name="iphone 13">
+          <div class="thumb"><img src="https://images.unsplash.com/photo-1632661674596-df8be070a5c5?auto=format&fit=crop&w=900&q=80" alt="iPhone 13" /></div>
+          <div class="content"><h3>iPhone 13</h3><p class="spec">128GB | Semi novo premium</p><div class="price-row"><span class="price">R$ 3.899,90</span></div><p class="pix">no Pix: R$ 3.743,90</p><button class="buy">Comprar</button></div>
+        </article>
+        <article class="card" data-brand="apple" data-name="iphone 15">
+          <div class="thumb"><span class="badge">NOVO</span><img src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=900&q=80" alt="iPhone 15" /></div>
+          <div class="content"><h3>iPhone 15</h3><p class="spec">128GB | Dynamic Island | 5G</p><div class="price-row"><span class="old">R$ 6.199,90</span><span class="price">R$ 5.899,90</span></div><p class="pix">no Pix: R$ 5.663,90</p><button class="buy">Comprar</button></div>
+        </article>
+
+        <article class="card" data-brand="samsung" data-name="galaxy z flip5">
+          <div class="thumb"><span class="badge">FOLD</span><img src="https://images.unsplash.com/photo-1567581935884-3349723552ca?auto=format&fit=crop&w=900&q=80" alt="Galaxy Z Flip5" /></div>
+          <div class="content"><h3>Galaxy Z Flip5</h3><p class="spec">256GB | Tela dobrável | Premium</p><div class="price-row"><span class="price">R$ 4.999,90</span></div><p class="pix">no Pix: R$ 4.799,90</p><button class="buy">Comprar</button></div>
+        </article>
+
+        <article class="card" data-brand="xiaomi" data-name="xiaomi 14">
+          <div class="thumb"><img src="https://images.unsplash.com/photo-1605236453806-6ff36851218e?auto=format&fit=crop&w=900&q=80" alt="Xiaomi 14" /></div>
+          <div class="content"><h3>Xiaomi 14</h3><p class="spec">512GB | Snapdragon 8 Gen 3</p><div class="price-row"><span class="price">R$ 4.399,90</span></div><p class="pix">no Pix: R$ 4.223,90</p><button class="buy">Comprar</button></div>
+        </article>
+
+        <article class="card" data-brand="motorola" data-name="moto g54">
+          <div class="thumb"><img src="https://images.unsplash.com/photo-1606041011872-596597976b25?auto=format&fit=crop&w=900&q=80" alt="Moto G54" /></div>
+          <div class="content"><h3>Moto G54</h3><p class="spec">256GB | 8GB RAM | 5G</p><div class="price-row"><span class="price">R$ 1.399,90</span></div><p class="pix">no Pix: R$ 1.343,90</p><button class="buy">Comprar</button></div>
+        </article>
+
+        <article class="card" data-brand="samsung" data-name="galaxy s23 fe">
+          <div class="thumb"><img src="https://images.unsplash.com/photo-1610792516307-ea5acd9c3b00?auto=format&fit=crop&w=900&q=80" alt="Galaxy S23 FE" /></div>
+          <div class="content"><h3>Galaxy S23 FE</h3><p class="spec">256GB | Câmera tripla | 5G</p><div class="price-row"><span class="price">R$ 3.299,90</span></div><p class="pix">no Pix: R$ 3.167,90</p><button class="buy">Comprar</button></div>
+        </article>
+
+        <article class="card" data-brand="apple" data-name="iphone 12">
+          <div class="thumb"><img src="https://images.unsplash.com/photo-1632661674596-df8be070a5c5?auto=format&fit=crop&w=900&q=80" alt="iPhone 12" /></div>
+          <div class="content"><h3>iPhone 12</h3><p class="spec">128GB | Face ID | Seminovo premium</p><div class="price-row"><span class="price">R$ 2.999,90</span></div><p class="pix">no Pix: R$ 2.879,90</p><button class="buy">Comprar</button></div>
+        </article>
+
+        <article class="card" data-brand="apple" data-name="iphone 11">
+          <div class="thumb"><img src="https://images.unsplash.com/photo-1664478546384-d57ffe74a2cb?auto=format&fit=crop&w=900&q=80" alt="iPhone 11" /></div>
+          <div class="content"><h3>iPhone 11</h3><p class="spec">128GB | Bateria 100% | Garantia loja</p><div class="price-row"><span class="price">R$ 2.399,90</span></div><p class="pix">no Pix: R$ 2.303,90</p><button class="buy">Comprar</button></div>
+        </article>
+
+        <article class="card" data-brand="samsung" data-name="galaxy s23">
+          <div class="thumb"><img src="https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=900&q=80" alt="Galaxy S23" /></div>
+          <div class="content"><h3>Galaxy S23</h3><p class="spec">256GB | Snapdragon | 120Hz</p><div class="price-row"><span class="price">R$ 3.899,90</span></div><p class="pix">no Pix: R$ 3.743,90</p><button class="buy">Comprar</button></div>
+        </article>
+
+        <article class="card" data-brand="samsung" data-name="galaxy a35">
+          <div class="thumb"><img src="https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=900&q=80" alt="Galaxy A35" /></div>
+          <div class="content"><h3>Galaxy A35</h3><p class="spec">256GB | IP67 | 5G</p><div class="price-row"><span class="price">R$ 1.899,90</span></div><p class="pix">no Pix: R$ 1.823,90</p><button class="buy">Comprar</button></div>
+        </article>
+
+        <article class="card" data-brand="xiaomi" data-name="redmi note 12">
+          <div class="thumb"><img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=900&q=80" alt="Redmi Note 12" /></div>
+          <div class="content"><h3>Redmi Note 12</h3><p class="spec">128GB | AMOLED | NFC</p><div class="price-row"><span class="price">R$ 1.399,90</span></div><p class="pix">no Pix: R$ 1.343,90</p><button class="buy">Comprar</button></div>
+        </article>
+
+        <article class="card" data-brand="xiaomi" data-name="poco f5">
+          <div class="thumb"><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=80" alt="POCO F5" /></div>
+          <div class="content"><h3>POCO F5</h3><p class="spec">256GB | Snapdragon 7+ Gen 2</p><div class="price-row"><span class="price">R$ 2.199,90</span></div><p class="pix">no Pix: R$ 2.111,90</p><button class="buy">Comprar</button></div>
+        </article>
+
+        <article class="card" data-brand="motorola" data-name="edge 40 neo">
+          <div class="thumb"><img src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?auto=format&fit=crop&w=900&q=80" alt="Edge 40 Neo" /></div>
+          <div class="content"><h3>Edge 40 Neo</h3><p class="spec">256GB | pOLED | 68W TurboPower</p><div class="price-row"><span class="price">R$ 1.999,90</span></div><p class="pix">no Pix: R$ 1.919,90</p><button class="buy">Comprar</button></div>
+        </article>
+
+        <article class="card" data-brand="motorola" data-name="moto g73">
+          <div class="thumb"><img src="https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?auto=format&fit=crop&w=900&q=80" alt="Moto G73" /></div>
+          <div class="content"><h3>Moto G73</h3><p class="spec">128GB | 8GB RAM | Som estéreo</p><div class="price-row"><span class="price">R$ 1.599,90</span></div><p class="pix">no Pix: R$ 1.535,90</p><button class="buy">Comprar</button></div>
+        </article>
+
+        <article class="card" data-brand="apple" data-name="iphone se 2022">
+          <div class="thumb"><img src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=900&q=80" alt="iPhone SE 2022" /></div>
+          <div class="content"><h3>iPhone SE 2022</h3><p class="spec">128GB | Compacto | A15 Bionic</p><div class="price-row"><span class="price">R$ 2.799,90</span></div><p class="pix">no Pix: R$ 2.687,90</p><button class="buy">Comprar</button></div>
+        </article>
+
+        <article class="card" data-brand="samsung" data-name="galaxy m55">
+          <div class="thumb"><img src="https://images.unsplash.com/photo-1610792516307-ea5acd9c3b00?auto=format&fit=crop&w=900&q=80" alt="Galaxy M55" /></div>
+          <div class="content"><h3>Galaxy M55</h3><p class="spec">256GB | Bateria 5000mAh | 5G</p><div class="price-row"><span class="price">R$ 2.299,90</span></div><p class="pix">no Pix: R$ 2.207,90</p><button class="buy">Comprar</button></div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Shopping do Celular - Pagamento seguro | Suporte via WhatsApp | Atendimento de segunda a sábado
+  </footer>
+
+  <script>
+    const buttons = document.querySelectorAll('#brandFilters .filter-btn');
+    const cards = document.querySelectorAll('#productsGrid .card');
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+    const resultsCount = document.getElementById('resultsCount');
+
+    let activeBrand = 'todos';
+
+    function applyFilters() {
+      const term = searchInput.value.trim().toLowerCase();
+      let shown = 0;
+
+      cards.forEach((card) => {
+        const brand = card.dataset.brand;
+        const name = card.dataset.name;
+        const byBrand = activeBrand === 'todos' || brand === activeBrand;
+        const bySearch = term === '' || name.includes(term);
+        const show = byBrand && bySearch;
+        card.style.display = show ? 'block' : 'none';
+        if (show) shown += 1;
+      });
+
+      resultsCount.textContent = 'Mostrando ' + shown + ' produto(s)';
+    }
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        buttons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeBrand = btn.dataset.brand;
+        applyFilters();
+      });
+    });
+
+    searchBtn.addEventListener('click', applyFilters);
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') applyFilters();
+    });
+  </script>
+</body>
+</html>
+
